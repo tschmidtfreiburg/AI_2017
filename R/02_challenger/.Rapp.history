@@ -1,0 +1,10 @@
+# Logistische Funktion#
+x=seq(-6,6,by=0.01)#
+y = exp(x) / (1+exp(x))#
+#
+plot(x,y,type="l",main="Logistic function",lwd=2)#
+lines(x,pnorm(x),lty=2,lwd=2)#
+legend(-5.6,0.944,lty=c(1,2),legend=c("logistic","normal"))
+x=seq(0,1,by=0.001)#
+y=log (x/(1-x))#
+plot(x,y,type="l",main="Logit function",lwd=2)
