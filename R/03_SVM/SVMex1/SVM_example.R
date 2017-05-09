@@ -26,11 +26,39 @@ plot(svmfit,dat,color = terrain.colors)
 svmfit$index   # Identities of the support vectors
 summary(svmfit)
 
+
+# For a better understanding of the output we produce our own plot ! 
+# The linear line satisfies
+# beta_1 x_1 + beta_2 x_2 + beta_0 = 0.
+# Hence, the slope is beta_1 / beta_2 and the intercept is -beta_0 / beta_2 
+beta = colSums(svmfit$coefs[,1]* x[svmfit$index,])
+beta0 = -1*svmfit$rho
+plot(x,xlab="x1",ylab="x2",main="Support Vector Classifier",pch=NA_integer_)
+abline(-beta0/beta[2],-beta[1]/beta[2])
+abline((-beta0+1)/beta[2],-beta[1]/beta[2],lty=2)
+abline((-beta0-1)/beta[2],-beta[1]/beta[2],lty=2) 
+# Mark vectors
+points(x[-svmfit$index,],col=ifelse(y[-svmfit$index]<0,1,2),pch=1)
+# Mark support vectors
+points(x[svmfit$index,],col=ifelse(y[svmfit$index]<0,1,2),pch=17)
+
+legend("topright", c("group 1","group -1","supp. vector","supp. vector"), pch = c(1,1,17,17), col = c(1,2,1,2), inset = .02)
+
+xmin=min(x[,1])*1.2
+xmax=max(x[,1])*1.2
+yxmin=-beta0/beta[2]-xmin*beta[1]/beta[2]
+yxmax=-beta0/beta[2]-xmax*beta[1]/beta[2]
+ymax=max(x[,2])*1.2
+# Draw polyong for group 2 (upper area)
+polygon(c(xmin,xmin,xmax,xmax),c(ymax,yxmin,yxmax,ymax),col=rgb(1,0.7,0.7),density=4)
+
+
 # A smaller cost parameter
 
 svmfit=svm(y ~., data=dat, kernel="linear", cost=0.1, scale=FALSE)
 plot(svmfit , dat, color = terrain.colors)
 svmfit$index
+
 
 # Lets compare the cost vectors via the method tune
 
