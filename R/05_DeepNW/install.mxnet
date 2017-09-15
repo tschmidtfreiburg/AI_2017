@@ -1,0 +1,12 @@
+
+## Install MXNET - complicated.
+
+
+# Try this: https://github.com/dmlc/drat/issues/7
+# Works after Downloading the latest R 3.4.1 !!
+
+
+cran <- getOption("repos")
+cran["dmlc"] <- "https://s3-us-west-2.amazonaws.com/apache-mxnet/R/CRAN/"
+options(repos = cran)
+install.packages("mxnet")
